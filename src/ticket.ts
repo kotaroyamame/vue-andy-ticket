@@ -4,10 +4,10 @@ export namespace Ticket {
 	let key: { partitionKey: string, rangeKey: number } | null = null;
 	let item: any;
 	let startTime: string = "";
-	const setItem = (item: any) => {
+	export const setItem = (item: any) => {
 		item = item;
 	}
-	const hoge = () => {
+	export const hoge = () => {
 		console.log(AndyTicket);
 	}
 	const send = async () => {
