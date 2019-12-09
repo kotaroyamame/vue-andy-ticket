@@ -1,0 +1,45 @@
+{
+  "name": "vue-andy-ticket",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "scripts": {
+    "start": "vue-cli-service serve",
+    "build-lib": "cross-env BUILD_TARGET=lib vue-cli-service build --target lib --name vue-andy-kurage ./src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "main": "index.js",
+  "files": [
+    "types/index.d.ts",
+    "dist"
+  ],
+  "dependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.14",
+    "@types/vue": "^2.0.0",
+    "@types/webpack-env": "^1.14.1",
+    "@vue/cli-service": "^4.1.1",
+    "axios": "^0.19.0",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.7.2",
+    "jest": "^24.9.0",
+    "node": "^13.3.0",
+    "tslib": "^1.10.0",
+    "types": "^0.1.1",
+    "typescript": "^3.6.4",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.1.0",
+    "vue-loader": "^15.7.2",
+    "vue-property-decorator": "^8.3.0",
+    "vue-template-compiler": "^2.6.10",
+    "vue-types": "^1.7.0",
+    "webpack": "^4.41.2",
+    "webpack-env": "^0.8.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-typescript": "^4.1.1",
+    "vue-cli-plugin-typescript": "0.0.1"
+  },
+  "license": "ISC",
+  "types": "types/index.d.ts"
+}
