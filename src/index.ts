@@ -9,7 +9,7 @@ export const AndyTicket: PluginObject<any> = {
 		}
 
 		this.installed = true;
-		this.ticket = Ticket;
+		this.ticket = new Ticket();
 		this.hoge = "asdf";
 		Vue.prototype.$ticket = this.ticket;
 		// Object.defineProperties(Vue.prototype, {
