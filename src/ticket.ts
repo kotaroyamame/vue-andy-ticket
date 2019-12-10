@@ -5,7 +5,16 @@ interface TicketData {
 	endTime?: string;
 	item?: any;
 }
-export class Ticket {
+export interface Ticket {
+	setItem(item: any): void;
+	setQuery(text: string): void;
+	setStartTime(time?: string): void;
+	setEndTime(time?: string): void;
+	setData(data: any): void;
+	send(): void;
+	reset(): void;
+}
+export class TicketService implements Ticket {
 	private key: { partitionKey: string, rangeKey: number } | null = null;
 	private item: any;
 	private startTime: string = "";
@@ -26,7 +35,7 @@ export class Ticket {
 	public setEndTime(time?: string) {
 		this.endTime = time || String(new Date().getTime());
 	}
-	public async setData(data: any, isSend = false, isReset = false) {
+	public async setData(data: any) {
 		if (this.data == null) {
 			this.data = {};
 		}
@@ -38,12 +47,6 @@ export class Ticket {
 		}
 		if (data.item) {
 			this.setItem(data.item);
-		}
-		if (isSend) {
-			await this.send();
-		}
-		if (isReset) {
-			this.reset();
 		}
 	}
 	public async send() {

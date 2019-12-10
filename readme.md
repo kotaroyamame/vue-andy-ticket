@@ -42,9 +42,13 @@ this.$ticket.setData(
 
 エンドタイムをセットする。引数がない場合は現在時刻がセットされる
 
-- setData(data: Object,isSend?: boolean, isReset?: boolean)
+- setData(data: Object)
 
 任意のデータをセットする。リセットするまで値は保持される。
+
+- async send()
+
+チケットをサーバーに投げる（リセットしない場合はrangeKeyなどが内部に保持され、上書きされる）
 
 - reset()
 
