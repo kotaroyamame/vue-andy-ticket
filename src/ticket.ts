@@ -67,7 +67,7 @@ export class Ticket {
 		const res: any = await axios({
 			url: AndyTicket.url,
 			headers: {
-				'Content-Type': 'text/json'
+				'Content-Type': 'application/json'
 			},
 			method: 'POST',
 			data: { values },
