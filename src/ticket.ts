@@ -47,22 +47,22 @@ export class Ticket {
 		}
 	}
 	public async send() {
-		const postData = {};
-		Object.assign(postData, { query: this.query, currentScript: this.currentScript, currentFaqId: this.currentFaqId });
+		const values = {};
+		Object.assign(values, { query: this.query, currentScript: this.currentScript, currentFaqId: this.currentFaqId });
 		if (this.key != null) {
-			Object.assign(postData, { partitionKey: this.key.partitionKey, rangeKey: this.key.rangeKey });
+			Object.assign(values, { partitionKey: this.key.partitionKey, rangeKey: this.key.rangeKey });
 		}
 		if (this.data != null) {
-			Object.assign(postData, this.data);
+			Object.assign(values, this.data);
 		}
 		if (this.item != null) {
-			Object.assign(postData, this.item);
+			Object.assign(values, this.item);
 		}
 		if (this.startTime != '') {
-			Object.assign(postData, { startTime: this.startTime });
+			Object.assign(values, { startTime: this.startTime });
 		}
 		if (this.endTime != '') {
-			Object.assign(postData, { endTime: this.endTime });
+			Object.assign(values, { endTime: this.endTime });
 		}
 		const res: any = await axios({
 			url: AndyTicket.url,
@@ -70,7 +70,7 @@ export class Ticket {
 				'Content-Type': 'text/json'
 			},
 			method: 'POST',
-			data: postData,
+			data: { values },
 		});
 		console.log(res);
 		this.key = res;
