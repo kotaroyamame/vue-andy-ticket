@@ -1,26 +1,61 @@
 import axios from "axios";
-import {AndyTicket} from "./index";
+import { AndyTicket } from "./index";
+interface TicketData {
+	startTime: string;
+	endTime?: string;
+	item?: any;
+}
 export class Ticket {
-	key: { partitionKey: string, rangeKey: number } | null = null;
-	item: any;
-	startTime: string = "";
-	setItem(item: any) {
+	private key: { partitionKey: string, rangeKey: number } | null = null;
+	private item: any;
+	private startTime: string = "";
+	private endTime: string = "";
+	private data: any = null;
+	public setItem(item: any) {
 		this.item = item;
 	}
-	hoge(){
-		console.log(AndyTicket);
+	public async setData(data: any, isSend = false, isReset = false) {
+		if (this.data == null) {
+			this.data = {};
+		}
+		for (const key in data) {
+			if (key === 'item') {
+				continue;
+			}
+			this.data[key] = data[key];
+		}
+		if (data.item) {
+			this.setItem(data.item);
+		}
+		if (isSend) {
+			await this.send();
+		}
+		if (isReset) {
+			this.reset();
+		}
 	}
-	public async send() {
-		const postData={};
-		
-		const res = await axios({
-			url: '',
+	private async send() {
+		const postData = {};
+		if (this.key != null) {
+			Object.assign(postData, this.key);
+		}
+		if (this.item != null) {
+			Object.assign(postData, this.item);
+		}
+		const res: any = await axios({
+			url: AndyTicket.url,
 			headers: {
 				'Content-Type': 'text/json'
 			},
 			method: 'POST',
-			data: {},
+			data: postData,
 		});
+		console.log(res);
+		this.key = res;
 	}
-	public reset() { }
+	public reset() {
+		this.key = null;
+		this.item = null;
+		this.startTime = "";
+	}
 }
