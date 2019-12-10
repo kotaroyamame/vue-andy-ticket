@@ -1,9 +1,9 @@
 import { PluginObject } from 'vue'
 import { Component, Prop, Vue as _Vue } from 'vue-property-decorator'
-import { Ticket } from "./ticket";
+import { TicketService } from "./ticket";
 export const AndyTicket: PluginObject<any> = {
 	installed: false,
-	ticket: new Ticket(),
+	ticket: new TicketService(),
 	url: "",
 	productId: "",
 	install(Vue: typeof _Vue, options?: any): void {

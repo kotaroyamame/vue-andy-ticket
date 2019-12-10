@@ -5,7 +5,7 @@
 main.js
 ```
 
-import { AndyTicket } from 'vue-andy-ticket/dist/vue-andy-kurage.common.js';
+import { AndyTicket } from 'vue-andy-ticket/dist/vue-andy-ticket.common.js';
 Vue.use(AndyTicket, { url: `${subSystemUrl}/product/${PRODUCT_ID}/public-ticket`, productId: PRODUCT_ID });
 
 ```
