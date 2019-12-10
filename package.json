@@ -5,11 +5,11 @@
   "author": "",
   "scripts": {
     "start": "vue-cli-service serve",
-    "build-lib": "cross-env BUILD_TARGET=lib vue-cli-service build --target lib --name vue-andy-kurage ./src/index.ts",
+    "build-lib": "cross-env BUILD_TARGET=lib vue-cli-service build --target lib --name vue-andy-ticket ./src/index.ts",
     "build-type": "tsc --emitDeclarationOnly --declaration -P tsconfig.types.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "main": "./dist/vue-andy-kurage.common.js",
+  "main": "./dist/vue-andy-ticket.common.js",
   "types": "./dist/types/index.d.ts",
   "files": [
     "types/index.d.ts",
