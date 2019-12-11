@@ -91,8 +91,9 @@ export class TicketFactory implements TicketService {
 				data: { values },
 			});
 			console.log(res);
-			if (res && res.hasOwnProperty('putItem') && res.putItem.hasOwnProperty('partitionKey') && res.putItem.hasOwnProperty('rangeKey')) {
-				const { partitionKey, rangeKey } = res.putItem;
+			const data = res.data;
+			if (data && data.hasOwnProperty('putItem') && data.putItem.hasOwnProperty('partitionKey') && data.putItem.hasOwnProperty('rangeKey')) {
+				const { partitionKey, rangeKey } = data.putItem;
 				const ticket = new Ticket(partitionKey, rangeKey);
 				this.ticket = ticket;
 			}
@@ -101,27 +102,42 @@ export class TicketFactory implements TicketService {
 			return { error: true, response: e };
 		}
 	}
-	public setItem(item: any) {
+	public async setItem(item: any) {
+		if (this.ticket === null) {
+			await this.ticketrequest();
+		}
 		if (this.ticket) {
 			this.ticket.setItem(item);
 		}
 	}
-	public setQuery(text: string) {
+	public async setQuery(text: string) {
+		if (this.ticket === null) {
+			await this.ticketrequest();
+		}
 		if (this.ticket) {
 			this.ticket.setQuery(text);
 		}
 	}
-	public setStartTime(time?: string) {
+	public async setStartTime(time?: string) {
+		if (this.ticket === null) {
+			await this.ticketrequest();
+		}
 		if (this.ticket) {
 			this.ticket.setStartTime(time || String(new Date().getTime()));
 		}
 	}
-	public setEndTime(time?: string) {
+	public async setEndTime(time?: string) {
+		if (this.ticket === null) {
+			await this.ticketrequest();
+		}
 		if (this.ticket) {
 			this.ticket.setEndTime(time || String(new Date().getTime()));
 		}
 	}
 	public async setData(data: any) {
+		if (this.ticket === null) {
+			await this.ticketrequest();
+		}
 		if (this.ticket) {
 			this.ticket.setData(data);
 		}
