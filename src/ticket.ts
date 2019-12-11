@@ -5,17 +5,16 @@ interface TicketData {
 	endTime?: string;
 	item?: any;
 }
-export interface Ticket {
+export interface TicketService {
 	setItem(item: any): void;
 	setQuery(text: string): void;
 	setStartTime(time?: string): void;
 	setEndTime(time?: string): void;
 	setData(data: any): void;
-	send(): void;
+	push(): void;
 	reset(): void;
 }
-export class TicketService implements Ticket {
-	private key: { partitionKey: string, rangeKey: number } | null = null;
+class Ticket {
 	private item: any;
 	private startTime: string = "";
 	private endTime: string = "";
@@ -23,6 +22,9 @@ export class TicketService implements Ticket {
 	private query: string = "NONE";
 	private currentScript: string = "NONE";
 	private currentFaqId: string = "NONE";
+	constructor(private partitionKey: string, private rangeKey: number) {
+
+	}
 	public setItem(item: any) {
 		this.item = item;
 	}
@@ -49,12 +51,9 @@ export class TicketService implements Ticket {
 			this.setItem(data.item);
 		}
 	}
-	public async send() {
-		const values = {};
+	public get Data() {
+		const values = { partitionKey: this.partitionKey, rangeKey: this.rangeKey };
 		Object.assign(values, { query: this.query, currentScript: this.currentScript, currentFaqId: this.currentFaqId });
-		if (this.key != null) {
-			Object.assign(values, { partitionKey: this.key.partitionKey, rangeKey: this.key.rangeKey });
-		}
 		if (this.data != null) {
 			Object.assign(values, this.data);
 		}
@@ -67,6 +66,71 @@ export class TicketService implements Ticket {
 		if (this.endTime != '') {
 			Object.assign(values, { endTime: this.endTime });
 		}
+		return values;
+	}
+}
+export class TicketFactory implements TicketService {
+	private static ticketFactory = new TicketFactory();
+	private ticket: Ticket | null = null;
+	private constructor() { }
+	public static getInstance() {
+		return this.ticketFactory;
+	}
+	public async ticketrequest(): Promise<{ error: boolean, response: any }> {
+		if (this.ticket !== null) {
+			return { error: true, response: this.ticket };
+		}
+		const values = {};
+		try {
+			const res: any = await axios({
+				url: AndyTicket.url,
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				method: 'POST',
+				data: { values },
+			});
+			console.log(res);
+			if (res && res.hasOwnProperty('putItem') && res.putItem.hasOwnProperty('partitionKey') && res.putItem.hasOwnProperty('rangeKey')) {
+				const { partitionKey, rangeKey } = res.putItem;
+				const ticket = new Ticket(partitionKey, rangeKey);
+				this.ticket = ticket;
+			}
+			return { error: false, response: this.ticket };
+		} catch (e) {
+			return { error: true, response: e };
+		}
+	}
+	public setItem(item: any) {
+		if (this.ticket) {
+			this.ticket.setItem(item);
+		}
+	}
+	public setQuery(text: string) {
+		if (this.ticket) {
+			this.ticket.setQuery(text);
+		}
+	}
+	public setStartTime(time?: string) {
+		if (this.ticket) {
+			this.ticket.setStartTime(time || String(new Date().getTime()));
+		}
+	}
+	public setEndTime(time?: string) {
+		if (this.ticket) {
+			this.ticket.setEndTime(time || String(new Date().getTime()));
+		}
+	}
+	public async setData(data: any) {
+		if (this.ticket) {
+			this.ticket.setData(data);
+		}
+	}
+	public async push() {
+		if (this.ticket == null) {
+			return;
+		}
+		const values = this.ticket.Data;
 		const res: any = await axios({
 			url: AndyTicket.url,
 			headers: {
@@ -75,17 +139,9 @@ export class TicketService implements Ticket {
 			method: 'POST',
 			data: { values },
 		});
-		console.log(res);
-		this.key = res;
+		return res;
 	}
 	public reset() {
-		this.key = null;
-		this.item = null;
-		this.startTime = "";
-		this.data = null;
-		this.endTime = "";
-		this.query = "NONE";
-		this.currentScript = "NONE";
-		this.currentFaqId = "NONE";
+		this.ticket = null;
 	}
 }
