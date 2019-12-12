@@ -37,7 +37,7 @@ class Ticket {
 	public setEndTime(time?: string) {
 		this.endTime = time || String(new Date().getTime());
 	}
-	public async setData(data: any) {
+	public set Data(data: any) {
 		if (this.data == null) {
 			this.data = {};
 		}
@@ -139,7 +139,7 @@ export class TicketFactory implements TicketService {
 			await this.ticketrequest();
 		}
 		if (this.ticket) {
-			this.ticket.setData(data);
+			this.ticket.Data = data;
 		}
 	}
 	public async push() {
