@@ -21,9 +21,7 @@ this.$ticket.setData(
 		currentFaqId,
 		origin,
 		type
-	},
-	true,
-	true
+	}
 );
 
 ```
@@ -39,12 +37,14 @@ this.$ticket.setData(
 ticketrequestメソッドにて生成されたチケットインスタンスにクエリをセットする。
 チケットインスタンスが無ければ予めticketrequestを実行し、チケットインスタンスを生成する。
 
-- setStartTime(time?: strig)
+- setStartTime(time?: string)
 
-ticketrequestメソッドにて生成されたチケットインスタンスにスタートタイムをセットする。引数がない場合は現在時刻がセットされる
+ticketrequestメソッドにて生成されたチケットインスタンスにスタートタイムをセットする。(unixタイムミリ秒のString)引数がない場合は現在時刻がセットされる
 チケットインスタンスが無ければ予めticketrequestを実行し、チケットインスタンスを生成する。
+例
+setStartTime("1580871994980")
 
-- setEndTime(time?: strig)
+- setEndTime(time?: string)
 
 ticketrequestメソッドにて生成されたチケットインスタンスにエンドタイムをセットする。引数がない場合は現在時刻がセットされる
 チケットインスタンスが無ければ予めticketrequestを実行し、チケットインスタンスを生成する。
