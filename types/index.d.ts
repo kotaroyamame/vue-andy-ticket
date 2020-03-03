@@ -1,6 +1,10 @@
 
 import Vue from "vue";
-
+// declare module '*.vue' {
+// 	import Vue from 'vue'
+	
+//   export default Vue
+// }
 declare module "vue/types/vue" {
 	interface TicketService {
 		setItem(item: any): void;
@@ -12,8 +16,7 @@ declare module "vue/types/vue" {
 		reset(): void;
 	}
 	interface Vue {
-		$ticket: TicketService;
+		readonly $ticket: TicketService;
 	}
 }
-
 

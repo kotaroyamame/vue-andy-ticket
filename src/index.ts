@@ -1,5 +1,5 @@
-import { PluginObject } from 'vue'
-import { Component, Prop, Vue as _Vue } from 'vue-property-decorator'
+import { PluginObject } from 'vue';
+import { Component, Prop, Vue as _Vue } from 'vue-property-decorator';
 import { TicketFactory } from "./ticket";
 export const AndyTicket: PluginObject<any> = {
 	installed: false,

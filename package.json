@@ -4,13 +4,12 @@
   "description": "",
   "author": "",
   "scripts": {
-    "start": "vue-cli-service serve",
     "build-lib": "cross-env BUILD_TARGET=lib vue-cli-service build --target lib --name vue-andy-ticket ./src/index.ts",
     "build-type": "tsc --emitDeclarationOnly --declaration -P tsconfig.types.json",
+    "start": "vue-cli-service serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-	"main": "./dist/vue-andy-ticket.common.js",
-	"typings": "types/index.d.ts",
+  "main": "./dist/vue-andy-ticket.common.js",
   "files": [
     "types/*.d.ts",
     "dist/*"
@@ -18,7 +17,6 @@
   "dependencies": {
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.28",
-    "@types/vue": "^2.0.0",
     "@types/webpack-env": "^1.15.1",
     "@vue/cli-service": "^4.2.2",
     "axios": "^0.19.2",
@@ -34,12 +32,14 @@
     "vue-loader": "^15.9.0",
     "vue-property-decorator": "^8.4.0",
     "vue-template-compiler": "^2.6.11",
-    "vue-types": "^1.7.0",
     "webpack": "^4.41.6",
     "webpack-env": "^0.8.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-typescript": "^4.2.2"
+    "@types/webpack": "^4.41.7",
+    "@vue/cli-plugin-typescript": "^4.2.3",
+    "typescript": "~3.7.5"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "typings": "types/index.d.ts"
 }
